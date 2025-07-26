@@ -1,5 +1,6 @@
 import React from "react";
 import FAQItem from "../FAQItem";
+import { webDevFAQs } from "../../constants";
 
 type Props = {
   toggleDarkMode: () => void;
@@ -26,7 +27,16 @@ const FAQList = ({ toggleDarkMode, darkMode }: Props) => {
           </button>
         </div>
       </div>
-      <FAQItem />
+      <div className="bg-white/80 dark:bg-gray-800/80 rounded-xl shadow-lg border border-indigo-100/50 dark:border-indigo-900/30 overflow-hidden transition-all duration-300">
+        {webDevFAQs?.map((item) => (
+          <FAQItem
+            key={item.id}
+            item={item}
+            onClick={toggleItem}
+            isOpen={expandAll || openId === item.id}
+          />
+        ))}
+      </div>
     </div>
   );
 };
