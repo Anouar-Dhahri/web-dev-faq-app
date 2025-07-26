@@ -6,11 +6,11 @@ type Props = {
     question: string;
     answer: string;
   };
-  onClick: (id: number | null) => void;
+  onClick: (id: number) => void;
   isOpen: boolean;
 };
 const FAQItem = ({ item, onClick, isOpen }: Props) => {
-  const answerRef = useRef(null);
+  const answerRef = useRef<HTMLDivElement>(null);
   return (
     <div
       className="border-b border-gray-200 dark:border-gray-700 last:border-none transition-colors duration-300 hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-transparent dark:hover:from-gray-800/50 dark:hover:to-transparent"

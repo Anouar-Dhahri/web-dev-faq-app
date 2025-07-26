@@ -1,4 +1,9 @@
-export const webDevFAQs: Record<string, number | string>[] = [
+type FAQItemType = {
+  id: number;
+  question: string;
+  answer: string;
+};
+export const webDevFAQs: FAQItemType[] = [
   {
     id: 1,
     question: "What's the difference between React and Angular?",

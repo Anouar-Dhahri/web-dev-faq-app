@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FAQItem from "../FAQItem";
 import { webDevFAQs } from "../../constants";
 
@@ -15,13 +15,32 @@ const FAQList = ({ toggleDarkMode, darkMode }: Props) => {
     if (expandAll) {
       setExpandAll(false);
     }
-    setOpenId((prevId: number | null) => {
+    setOpenId((prevId: null | number) => {
       if (prevId === id) {
         return null;
       }
       return id;
     });
   };
+
+  const toggleExpandAll = () => {
+    setExpandAll((prev) => !prev);
+    setOpenId(null);
+  };
+
+  useEffect(() => {
+    if (openId && typeof window !== "undefined") {
+      setTimeout(() => {
+        const element = document.getElementById(`faq-item-${openId}`);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      }, 100);
+    }
+  }, [openId]);
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -31,9 +50,14 @@ const FAQList = ({ toggleDarkMode, darkMode }: Props) => {
         </h2>
 
         <div className="flex items-center space-x-4">
-          <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-lg shadow-sm hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition-all duration-300 cursor-pointer">
-            <i className="bx bx-collapse-alt text-lg"></i>
-            Expand All
+          <button
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-lg shadow-sm hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition-all duration-300 cursor-pointer"
+            onClick={toggleExpandAll}>
+            <i
+              className={`bx bx-${
+                expandAll ? "collapse-alt" : "expand-alt"
+              }  text-lg`}></i>
+            {expandAll ? "Collapse All" : "Expand All"}
           </button>
           <button
             onClick={toggleDarkMode}

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import FAQList from "./components/FAQList";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem("darkMode");
+    return savedTheme ? JSON.parse(savedTheme) : false;
+  });
 
   useEffect(() => {
     if (darkMode) {
@@ -10,6 +13,7 @@ function App() {
     } else {
       document.documentElement.classList.remove("dark");
     }
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
 
   const toggleDarkMode = () => {
