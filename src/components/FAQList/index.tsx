@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FAQItem from "../FAQItem";
 import { webDevFAQs } from "../../constants";
 
@@ -8,6 +8,21 @@ type Props = {
 };
 
 const FAQList = ({ toggleDarkMode, darkMode }: Props) => {
+  const [openId, setOpenId] = useState<number | null>(null);
+  const [expandAll, setExpandAll] = useState<boolean>(false);
+
+  const toggleItem = (id: number) => {
+    if (expandAll) {
+      setExpandAll(false);
+    }
+    setOpenId((prevId: number | null) => {
+      if (prevId === id) {
+        return null;
+      }
+      return id;
+    });
+  };
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">

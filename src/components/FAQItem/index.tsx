@@ -1,8 +1,12 @@
 import React, { useRef } from "react";
 
 type Props = {
-  item: Record<string, string | number>;
-  onClick: () => void;
+  item: {
+    id: number;
+    question: string;
+    answer: string;
+  };
+  onClick: (id: number | null) => void;
   isOpen: boolean;
 };
 const FAQItem = ({ item, onClick, isOpen }: Props) => {
@@ -17,7 +21,7 @@ const FAQItem = ({ item, onClick, isOpen }: Props) => {
             ? "bg-gradient-to-r from-indigo-200 via-purple-200 to-indigo-200/90 dark:from-indigo-900/80 dark:via-purple-900/80 dark:to-indigo-900/70 text-purple-700 dark:text-white font-medium"
             : "text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 dark:hover:from-indigo-400 dark:hover:to-purple-400"
         }`}
-        onClick={() => onClick(item.id)}>
+        onClick={() => onClick(item?.id)}>
         <span className="text-lg font-medium pr-6">{item.question}</span>
         <div
           className={`flex-shrink-0 flex items-center justify-center w-8 min-w-8 aspect-square rounded-full ${
